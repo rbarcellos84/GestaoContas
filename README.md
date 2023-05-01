@@ -1,0 +1,1 @@
+Um projeto desenvolvido com um conjunto de boas práticas de programação DDD, separação da camada de interface, camada de aplicação, camada de regra de negócio e a camada de infraestrutura utilizando as tecnologias AspNet MVC, Bootstrap, JQuery, EntityFramework, SqlServer, JavaScript, Excel EpPlus e Pdf iText7. 

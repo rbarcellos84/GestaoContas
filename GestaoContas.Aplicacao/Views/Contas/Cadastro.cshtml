@@ -1,0 +1,60 @@
+﻿
+@model GestaoContas.Aplicacao.Models.ContasCadastroModel
+@{
+    ViewData["Title"] = "Cadastro";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<h5>Cadastro de Contas</h5>
+Preencha os campos para incluir uma conta a pagar ou receber.
+<hr />
+
+@** Codigo Razor **@
+@using(Html.BeginForm())
+{
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>Nome da conta:</label>
+            @Html.TextBoxFor(model => model.Nome, new { @class="form-control" })
+            <div>
+                @Html.ValidationMessageFor(model => model.Nome)
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label>Tipo da conta:</label>
+        </div>
+        <div class="col-md-2">
+            @Html.RadioButtonFor(model => model.Tipo, "Receber") <span>Conta a receber</span>
+        </div>
+        <div class="col-md-2">
+            @Html.RadioButtonFor(model => model.Tipo, "Pagar") <span>Conta a pagar</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Tipo)
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label>Data da conta:</label>
+            @Html.TextBoxFor(model => model.Data, new { @class="form-control", @type = "date" })
+            <div>
+                @Html.ValidationMessageFor(model => model.Data)
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Valor da conta:</label>
+            @Html.TextBoxFor(model => model.Valor, new { @class="form-control" })
+            <div>
+                @Html.ValidationMessageFor(model => model.Valor)
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <div class="mb-3 d-grid">
+                <input type="submit" class="btn btn-success" value="Salvar"/>
+            </div>
+        </div>
+    </div>
+}

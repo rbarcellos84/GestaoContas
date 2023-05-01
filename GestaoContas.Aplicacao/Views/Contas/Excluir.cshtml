@@ -1,0 +1,57 @@
+﻿
+@model GestaoContas.Aplicacao.Models.ContasExcluirModel
+@{
+    ViewData["Title"] = "Exclusão";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<h5>Atualização de Contas</h5>
+Formulario para excluão de uma conta.
+<hr />
+@** Codigo Razor **@
+@using(Html.BeginForm())
+{
+    <div>
+        @Html.HiddenFor(model => model.IdConta)
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>Nome da conta:</label>
+            @Html.TextBoxFor(model => model.Nome, new { @class="form-control", @disabled = true })
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label>Tipo da conta:</label>
+        </div>
+        <div class="col-md-2">
+            @Html.RadioButtonFor(model => model.Tipo, "Receber", new { @disabled = true }) <span>Conta a receber</span>
+        </div>
+        <div class="col-md-2">
+            @Html.RadioButtonFor(model => model.Tipo, "Pagar", new { @disabled = true }) <span>Conta a pagar</span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label>Data da conta:</label>
+            @Html.TextBoxFor(model => model.Data, new { @class="form-control", @type = "date", @disabled = true})
+        </div>
+        <div class="col-md-3">
+            <label>Valor da conta:</label>
+            @Html.TextBoxFor(model => model.Valor, new { @class="form-control", @disabled = true })
+        </div>
+    </div>
+    <br />
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <div class="mb-3 d-grid">
+                <input type="submit" class="btn btn-success" value="Excluir"/>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="mb-3 d-grid">
+                <a href="/Contas/Consulta?value=1" class="btn btn-success">Voltar</a>
+            </div>
+        </div>
+    </div>
+}

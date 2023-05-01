@@ -1,0 +1,133 @@
+﻿
+@model GestaoContas.Aplicacao.Models.ContasConsultaModel
+@{
+    ViewData["Title"] = "Consulta";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<h5>Consulta de Contas</h5>
+Relação de contas a pagar e receber
+<hr />
+
+@** Codigo Razor **@
+@using(Html.BeginForm())
+{
+    <div class="row mb-3">
+        <table>
+            <tr>
+                <td>
+                    <div class="col-md-11">
+                        <label>Data de inicio:</label>
+                        @Html.TextBoxFor(model => model.DataInicio, new { @class="form-control", @type = "date" })
+                        <div>
+                            @Html.ValidationMessageFor(model => model.DataInicio) &nbsp;&nbsp;
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11">
+                        <label>Data de fim:</label>
+                        @Html.TextBoxFor(model => model.DataFim, new { @class="form-control", @type = "date" })
+                        <div>
+                            @Html.ValidationMessageFor(model => model.DataFim) &nbsp;&nbsp;
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11">
+                        <label>Tipo da conta:</label>
+                        <br/>
+                        @Html.RadioButtonFor(model => model.Conta, "Receber") <span>Conta a receber</span>&nbsp;&nbsp;
+                        <br/>
+                        @Html.RadioButtonFor(model => model.Conta, "Pagar") <span>Conta a pagar</span>
+                        <br/>
+                        @Html.ValidationMessageFor(model => model.Conta)
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11">
+                        <label>Arquivo:</label>
+                        <br/>
+                        @Html.RadioButtonFor(model => model.Formato, "Excel") <span>Excel</span>&nbsp;&nbsp;
+                        <br/>
+                        @Html.RadioButtonFor(model => model.Formato, "PDF") <span>PDF</span>
+                        <br/>
+                        @Html.ValidationMessageFor(model => model.Formato)
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11">
+                        <label>Tipo de relatório:</label>
+                        <br/>
+                        @Html.RadioButtonFor(model => model.TipoConsulta, "Tela") <span>Formulário</span>
+                        <br/>
+                        @Html.RadioButtonFor(model => model.TipoConsulta, "Documento") <span>Arquivo</span>&nbsp;&nbsp;
+                        <br/>
+                        @Html.ValidationMessageFor(model => model.TipoConsulta)
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11">
+                        <br/>
+                        <div class="mb-3 d-grid">
+                            <input type="submit" class="btn btn-success" value="Gerar Relatório"/>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <hr />
+        </div>
+        <table id="tabela" class="table table-sm table-hover">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Operacao</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @if(Model.Itens != null)
+                {
+                    @foreach (var c in Model.Itens)
+                    {
+                    <tr>
+                        <td>@c.Nome</td>
+                        <td>@c.Data.ToString("dd/MM/yyyy")</td>
+                        <td>@c.Valor</td>
+                        <td>@c.Tipo</td>
+                        <td>
+                            <a href="/Contas/Edicao?id=@c.IdConta" class="btn btn-sm btn-success">
+                                Editar
+                            </a>
+                            <a href="/Contas/Excluir?id=@c.IdConta" class="btn btn-sm btn-success">
+                                Excluir
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    @if(Model != null)
+                    {
+                        @if (Model.Itens != null)
+                        {
+                            <label>Quantidade de registro:</label> @Model.Itens.Count
+                        }
+                    }
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    <br />
+}

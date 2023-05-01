@@ -1,0 +1,68 @@
+﻿@model GestaoContas.Aplicacao.Models.ContasDashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+Controle de contas a paga e receber
+<hr />
+@** Codigo Razor **@
+@using(Html.BeginForm())
+{
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label>Data de inicio:</label>
+            @Html.TextBoxFor(model => model.DataInicio, new { @class="form-control", @type = "date" })
+            <div>
+                @Html.ValidationMessageFor(model => model.DataInicio) &nbsp;&nbsp;
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>Data de fim:</label>
+            @Html.TextBoxFor(model => model.DataFim, new { @class="form-control", @type = "date" })
+            <div>
+                @Html.ValidationMessageFor(model => model.DataFim) &nbsp;&nbsp;
+            </div>
+        </div>
+        <div class="col-md-3">
+            <br/>
+            <div class="mb-3 d-grid">
+                <input type="submit" class="btn btn-success" value="Gerar Relatório"/>
+            </div>
+        </div>
+        <div>
+            <hr />
+        </div>
+    </div>
+}
+
+<div class="row mb-3">
+    <div class="col-md-12">
+        <div id="grafico"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <script>
+    var array = [];
+    array.push(['Contas a Pagar', @TempData["ToatalContasPagar"]]);
+    array.push(['Contas a Receber', @TempData["ToatalContasReceber"]]);
+
+    new Highcharts.Chart({
+        chart: { type: 'pie', renderTo: 'grafico' },
+        title: { text: 'Somatório das contas do período' },
+        subtitle: { text: 'Somatório das contas a pagar e receber' },
+        plotOptions: {
+            pie: { innerSize: '60%' }
+        },
+        exporting: { enabled: false },
+        credits: { enabled: false },
+        series: [{ data: array }]
+    })
+    </script>
+}
